@@ -1,5 +1,6 @@
 
 
+
     ____   ____ __                                       
     \   \ /   /|__| ____ _____        __        __     
      \   Y   / |  |/    \\__  \    __|  |___ __|  |___ 
@@ -8,8 +9,9 @@
                        \/     \/                         
 
 
-            A simple tool to archive files
-                by Edison Luiz Matias
+            A simple CLI tool to archive files
+                  by Edison Luiz Matias
+
 
 
 

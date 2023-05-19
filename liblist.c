@@ -134,7 +134,7 @@ int insert_file(list_t *list, char *filename, int counter, int size)
     node_t *node = create_node(filename);
 
     insert_node(list, node);
-    printf("(%d/%d) inserted %s   \t", counter, size - 1, filename);
+    printf("(%d/%d) inserted %s \t\t", counter, size - 1, filename);
     printf("%d file(s) compressed\n", list->size);
 
     return 1;
@@ -151,7 +151,7 @@ int remove_file(list_t *list, char *filename, int counter, int size)
     node_t *node = find_node(list, filename);
 
     remove_node(list, node);
-    printf("(%d/%d) removed %s   \t", counter, size - 1, filename);
+    printf("(%d/%d) removed %s \t\t", counter, size - 1, filename);
     printf("%d file(s) compressed\n", list->size);
 
     return 1;
