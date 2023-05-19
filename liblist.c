@@ -105,27 +105,53 @@ void print_list(list_t *list)
         printf("- %s\n", node->filename);
         node = node->next;
     }
-    printf("\n");
 }
 
 int insert_file(list_t *list, char *filename, int counter, int size)
 {
+    if (access(filename, F_OK) == -1)
+    {
+        fprintf(stderr, "(%d/%d) ERROR: %s not found\n", counter, size - 1, filename);
+        return 0;
+    }
+
     node_t *node = create_node(filename);
 
     insert_node(list, node);
     printf("(%d/%d) inserted %s   \t", counter, size - 1, filename);
     printf("%d file(s) compressed\n", list->size);
 
-    return 0;
+    return 1;
 }
 
 int remove_file(list_t *list, char *filename, int counter, int size)
 {
+    if (access(filename, F_OK) == -1)
+    {
+        fprintf(stderr, "(%d/%d) ERROR: %s not found\n", counter, size - 1, filename);
+        return 0;
+    }
+
     node_t *node = find_node(list, filename);
 
     remove_node(list, node);
     printf("(%d/%d) removed %s   \t", counter, size - 1, filename);
     printf("%d file(s) compressed\n", list->size);
 
-    return 0;
+    return 1;
+}
+
+void write_file(list_t *list, char *filename)
+{
+    FILE *file = fopen(filename, "w");
+
+    node_t *node = list->head;
+
+    while (node != NULL)
+    {
+        fprintf(file, node->next ? "%s\n" : "%s", node->filename);
+        node = node->next;
+    }
+
+    fclose(file);
 }

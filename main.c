@@ -6,15 +6,21 @@ int main(int argc, char *argv[])
 
     for (int i = 1; i < argc; i++)
     {
-        insert_file(list, argv[i], i, argc);
-        print_list(list);
+        if (insert_file(list, argv[i], i, argc))
+            print_list(list);
+
+        printf("\n");
+        write_file(list, "backup.vpp");
     }
 
+    /*
     for (int i = 1; i < argc; i++)
     {
         remove_file(list, argv[i], i, argc);
         print_list(list);
+        write_file(list, "backup.vpp");
     }
+    */
 
     return 0;
 }

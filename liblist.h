@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 struct node
 {
@@ -68,3 +69,10 @@ int insert_file(list_t *list, char *filename, int counter, int size);
  * Recebe como parâmetro um ponteiro para a lista
  */
 int remove_file(list_t *list, char *filename, int counter, int size);
+
+/*
+ * Responsável por escrever o conteúdo da lista em um arquivo
+ * Recebe como parâmetro um ponteiro para a lista e o nome do arquivo
+ * Não possui retorno
+ */
+void write_file(list_t *list, char *filename);
