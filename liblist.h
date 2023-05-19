@@ -29,6 +29,13 @@ typedef struct list list_t;
 list_t *create_list(void);
 
 /*
+ * Responsável por liberar a memória alocada para a lista
+ * Recebe como parâmetro um ponteiro para a lista
+ * Retorna nulo
+ */
+list_t *free_list(list_t *list);
+
+/*
  * Responsável por instanciar um novo nó
  * Recebe como parâmetro o nome do arquivo
  * Retorna um ponteiro para o nó instanciado

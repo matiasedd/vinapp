@@ -11,6 +11,22 @@ list_t *create_list(void)
     return list;
 }
 
+list_t *free_list(list_t *list)
+{
+    node_t *node = list->head;
+
+    while (node != NULL)
+    {
+        node_t *next = node->next;
+        free(node);
+        node = next;
+    }
+
+    free(list);
+
+    return NULL;
+}
+
 node_t *create_node(char *filename)
 {
     node_t *node = malloc(sizeof(node_t));

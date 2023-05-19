@@ -38,5 +38,7 @@ int main(int argc, char *argv[])
     }
     */
 
+    free_list(list);
+
     return 0;
 }
