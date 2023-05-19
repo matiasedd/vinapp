@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         insert_file(list, argv[i], i, argc);
-        printf("\n");
         write_file(list, "backup.vpp");
     }
 
