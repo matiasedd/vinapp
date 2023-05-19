@@ -18,6 +18,7 @@ list_t *free_list(list_t *list)
     while (node != NULL)
     {
         node_t *next = node->next;
+        free(node->content);
         free(node);
         node = next;
     }
@@ -31,9 +32,17 @@ node_t *create_node(char *filename)
 {
     node_t *node = malloc(sizeof(node_t));
 
-    node->filename = filename;
     node->next = NULL;
     node->prev = NULL;
+    node->filename = filename;
+
+    stat(filename, &node->st);
+    node->content = malloc(node->st.st_size);
+
+    FILE *fp = fopen(filename, "rb");
+    fread(node->content, node->st.st_size, 1, fp);
+
+    fclose(fp);
 
     return node;
 }
@@ -165,7 +174,16 @@ void write_file(list_t *list, char *filename)
 
     while (node != NULL)
     {
-        fprintf(file, node->next ? "%s\n" : "%s", node->filename);
+        fprintf(file, "%s %ld\n", node->filename, node->st.st_size);
+        node = node->next;
+    }
+
+    node = list->head;
+
+    while (node != NULL)
+    {
+        fwrite(node->content, node->st.st_size, 1, file);
+        fwrite("\n", 1, 1, file);
         node = node->next;
     }
 

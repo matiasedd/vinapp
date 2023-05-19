@@ -6,6 +6,9 @@
 struct node
 {
     char *filename;
+    char *content;
+    struct stat st;
+
     struct node *next;
     struct node *prev;
 };

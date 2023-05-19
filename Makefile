@@ -1,8 +1,11 @@
+CC = gcc
+CFLAGS = -Wall -g
+
 all: liblist.o
-	gcc main.c -Wall liblist.o
+	$(CC) main.c $(CFLAGS) liblist.o
 
 liblist.o: liblist.c
-	gcc -c liblist.c -Wall
+	$(CC) -c liblist.c -Wall
 
 clean:
 	rm -f *.o a.out
