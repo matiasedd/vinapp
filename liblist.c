@@ -131,36 +131,41 @@ void print_list(list_t *list)
     }
 }
 
-int insert_file(list_t *list, char *filename, int counter, int size)
+int insert_file(list_t *list, char *filename)
 {
     if (access(filename, F_OK) == -1)
-    {
-        fprintf(stderr, "(%d/%d) ERROR: %s not found\n", counter, size - 1, filename);
         return 0;
-    }
 
     node_t *node = create_node(filename);
-
     insert_node(list, node);
-    printf("(%d/%d) inserted %s \t\t", counter, size - 1, filename);
-    printf("%d file(s) compressed\n", list->size);
 
     return 1;
 }
 
-int remove_file(list_t *list, char *filename, int counter, int size)
+int export_file(list_t *list, char *filename)
 {
-    if (access(filename, F_OK) == -1)
-    {
-        fprintf(stderr, "(%d/%d) ERROR: %s not found\n", counter, size - 1, filename);
-        return 0;
-    }
-
     node_t *node = find_node(list, filename);
 
+    if (node == NULL)
+        return 0;
+
+    // TODO: use filename instead of "output.txt"
+    FILE *file = fopen("output.txt", "w");
+
+    fwrite(node->content, node->st.st_size, 1, file);
+    fclose(file);
+
+    return 1;
+}
+
+int remove_file(list_t *list, char *filename)
+{
+    node_t *node = find_node(list, filename);
+
+    if (node == NULL)
+        return 0;
+
     remove_node(list, node);
-    printf("(%d/%d) removed %s \t\t", counter, size - 1, filename);
-    printf("%d file(s) compressed\n", list->size);
 
     return 1;
 }
@@ -198,25 +203,4 @@ void write_file(list_t *list, char *filename)
     }
 
     fclose(file);
-}
-
-int export_file(list_t *list, char *filename, int counter, int size)
-{
-    node_t *node = find_node(list, filename);
-
-    if (node == NULL)
-    {
-        fprintf(stderr, "(%d/%d) ERROR: %s not found\n", counter, size - 1, filename);
-        return 0;
-    }
-
-    FILE *file = fopen(filename, "w");
-
-    fwrite(node->content, node->st.st_size, 1, file);
-
-    fclose(file);
-
-    printf("(%d/%d) exported %s\n", counter, size - 1, filename);
-
-    return 1;
 }

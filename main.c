@@ -22,25 +22,47 @@ int main(int argc, char *argv[])
 
     for (int i = 1; i < argc; i++)
     {
-        insert_file(list, argv[i], i, argc);
+        if (insert_file(list, argv[i]))
+        {
+            printf("(%d/%d) inserted %s   \t\t", i, argc - 1, argv[i]);
+            printf("%d file(s) compressed\n", list->size);
+        }
+        else
+        {
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 1, argv[i]);
+        }
+
         write_file(list, "backup.vpp");
     }
 
     for (int i = 1; i < argc; i++)
     {
-        export_file(list, argv[i], i, argc);
-        remove_file(list, argv[i], i, argc);
-        write_file(list, "backup.vpp");
+        if (export_file(list, argv[i]))
+        {
+            remove_file(list, argv[i]);
+            printf("(%d/%d) exported %s   \t\t", i, argc - 1, argv[i]);
+            printf("%d file(s) compressed\n", list->size);
+        }
+        else
+        {
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 1, argv[i]);
+        }
     }
 
-    /*
     for (int i = 1; i < argc; i++)
     {
-        remove_file(list, argv[i], i, argc);
-        print_list(list);
+        if (remove_file(list, argv[i]))
+        {
+            printf("(%d/%d) removed %s   \t\t", i, argc - 1, argv[i]);
+            printf("%d file(s) compressed\n", list->size);
+        }
+        else
+        {
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 1, argv[i]);
+        }
+
         write_file(list, "backup.vpp");
     }
-    */
 
     free_list(list);
 
