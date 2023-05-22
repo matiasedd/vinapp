@@ -105,10 +105,9 @@ node_t *find_node(list_t *list, char *filename)
 
     while (node != NULL)
     {
-        if (node->filename == filename)
-        {
+        if (strcmp(node->filename, filename) == 0)
             return node;
-        }
+        
         node = node->next;
     }
 
@@ -199,4 +198,25 @@ void write_file(list_t *list, char *filename)
     }
 
     fclose(file);
+}
+
+int export_file(list_t *list, char *filename, int counter, int size)
+{
+    node_t *node = find_node(list, filename);
+
+    if (node == NULL)
+    {
+        fprintf(stderr, "(%d/%d) ERROR: %s not found\n", counter, size - 1, filename);
+        return 0;
+    }
+
+    FILE *file = fopen(filename, "w");
+
+    fwrite(node->content, node->st.st_size, 1, file);
+
+    fclose(file);
+
+    printf("(%d/%d) exported %s\n", counter, size - 1, filename);
+
+    return 1;
 }

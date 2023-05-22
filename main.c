@@ -7,7 +7,7 @@ void show_header()
     struct stat st;
     stat("header.txt", &st);
     char line[st.st_size];
-    
+
     while (fgets(line, st.st_size, fp) != NULL)
         printf("%s", line);
 
@@ -23,6 +23,13 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         insert_file(list, argv[i], i, argc);
+        write_file(list, "backup.vpp");
+    }
+
+    for (int i = 1; i < argc; i++)
+    {
+        export_file(list, argv[i], i, argc);
+        remove_file(list, argv[i], i, argc);
         write_file(list, "backup.vpp");
     }
 

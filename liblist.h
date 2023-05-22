@@ -85,6 +85,8 @@ int insert_file(list_t *list, char *filename, int counter, int size);
  */
 int remove_file(list_t *list, char *filename, int counter, int size);
 
+int export_file(list_t *list, char *filename, int counter, int size);
+
 /*
  * Responsável por escrever o conteúdo da lista em um arquivo
  * Recebe como parâmetro um ponteiro para a lista e o nome do arquivo
