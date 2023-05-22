@@ -14,12 +14,8 @@ void show_header()
     fclose(fp);
 }
 
-int main(int argc, char *argv[])
+void handle_insert(int argc, char *argv[], list_t *list)
 {
-    show_header();
-
-    list_t *list = create_list();
-
     for (int i = 1; i < argc; i++)
     {
         if (insert_file(list, argv[i]))
@@ -35,6 +31,11 @@ int main(int argc, char *argv[])
         write_file(list, "backup.vpp");
     }
 
+    printf("\n");
+}
+
+void handle_export(int argc, char *argv[], list_t *list)
+{
     for (int i = 1; i < argc; i++)
     {
         if (export_file(list, argv[i]))
@@ -49,6 +50,11 @@ int main(int argc, char *argv[])
         }
     }
 
+    printf("\n");
+}
+
+void handle_remove(int argc, char *argv[], list_t *list)
+{
     for (int i = 1; i < argc; i++)
     {
         if (remove_file(list, argv[i]))
@@ -63,6 +69,19 @@ int main(int argc, char *argv[])
 
         write_file(list, "backup.vpp");
     }
+
+    printf("\n");
+}
+
+int main(int argc, char *argv[])
+{
+    show_header();
+
+    list_t *list = create_list();
+
+    handle_insert(argc, argv, list);
+    handle_export(argc, argv, list);
+    handle_remove(argc, argv, list);
 
     free_list(list);
 
