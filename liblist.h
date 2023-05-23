@@ -34,18 +34,10 @@ list_t *free_list(list_t *list);
 
 node_t *create_node(char *filename);
 
+node_t *find_node(list_t *list, char *filename);
+
 int insert_node(list_t *list, node_t *node);
 
 int remove_node(list_t *list, node_t *node);
 
-node_t *find_node(list_t *list, char *filename);
-
 void print_list(list_t *list);
-
-int insert_file(list_t *list, char *filename);
-
-int remove_file(list_t *list, char *filename);
-
-int export_file(list_t *list, char *filename);
-
-void write_file(list_t *list, char *filename);
