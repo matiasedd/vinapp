@@ -1,5 +1,10 @@
 #include "libvina.h"
 
+void show_help()
+{
+    printf("Mostrar ajuda aqui...\n");
+}
+
 void show_header()
 {
     FILE *fp = fopen("header.txt", "r");
@@ -16,19 +21,19 @@ void show_header()
 
 void handle_insert(int argc, char *argv[], list_t *list)
 {
-    for (int i = 1; i < argc; i++)
+    for (int i = 3; i < argc; i++)
     {
         if (insert_file(list, argv[i]))
         {
-            printf("(%d/%d) inserted %s   \t\t", i, argc - 1, argv[i]);
+            printf("(%d/%d) inserted %s   \t\t", i, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else
         {
-            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 1, argv[i]);
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 3, argv[i]);
         }
 
-        write_file(list, "backup.vpp");
+        write_file(list, argv[2]);
     }
 
     printf("\n");
@@ -36,17 +41,17 @@ void handle_insert(int argc, char *argv[], list_t *list)
 
 void handle_export(int argc, char *argv[], list_t *list)
 {
-    for (int i = 1; i < argc; i++)
+    for (int i = 3; i < argc; i++)
     {
         if (export_file(list, argv[i]))
         {
             remove_file(list, argv[i]);
-            printf("(%d/%d) exported %s   \t\t", i, argc - 1, argv[i]);
+            printf("(%d/%d) exported %s   \t\t", i, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else
         {
-            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 1, argv[i]);
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 3, argv[i]);
         }
     }
 
@@ -55,19 +60,19 @@ void handle_export(int argc, char *argv[], list_t *list)
 
 void handle_remove(int argc, char *argv[], list_t *list)
 {
-    for (int i = 1; i < argc; i++)
+    for (int i = 3; i < argc; i++)
     {
         if (remove_file(list, argv[i]))
         {
-            printf("(%d/%d) removed %s   \t\t", i, argc - 1, argv[i]);
+            printf("(%d/%d) removed %s   \t\t", i, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else
         {
-            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 1, argv[i]);
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 3, argv[i]);
         }
 
-        write_file(list, "backup.vpp");
+        write_file(list, argv[2]);
     }
 
     printf("\n");
