@@ -4,6 +4,9 @@ list_t *create_list(void)
 {
     list_t *list = malloc(sizeof(list_t));
 
+    if (list == NULL)
+        return NULL;
+
     list->size = 0;
     list->head = NULL;
     list->tail = NULL;
@@ -31,6 +34,9 @@ list_t *free_list(list_t *list)
 node_t *create_node(char *filename)
 {
     node_t *node = malloc(sizeof(node_t));
+
+    if (node == NULL)
+        return NULL;
 
     node->next = NULL;
     node->prev = NULL;

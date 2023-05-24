@@ -6,6 +6,10 @@ int insert_file(list_t *list, char *filename)
         return 0;
 
     node_t *node = create_node(filename);
+
+    if (node == NULL)
+        return 0;
+
     insert_node(list, node);
 
     return 1;
@@ -30,8 +34,7 @@ int export_file(list_t *list, char *filename)
     if (node == NULL)
         return 0;
 
-    // TODO: use filename instead of "output.txt"
-    FILE *file = fopen("output.txt", "w");
+    FILE *file = fopen(filename, "w");
 
     fwrite(node->content, node->st.st_size, 1, file);
     fclose(file);
