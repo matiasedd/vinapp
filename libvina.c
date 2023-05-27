@@ -77,3 +77,21 @@ void handle_remove(int argc, char *argv[], list_t *list)
 
     printf("\n");
 }
+
+void get_metadata(char *filename)
+{
+    FILE *file = fopen(filename, "r");
+
+    if (file == NULL)
+    {
+        printf("Error: could not open file %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    char line[LINE_SIZE];
+    printf("%s", "FILENAME\tSIZE\tMODE\tUID\tGID\tMTIME\t\t\tATIME\n");
+
+    while (strcmp(fgets(line, LINE_SIZE, file), DELIMITER) != 0)
+        printf("%s", line);
+    printf("\n");   
+}

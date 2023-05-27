@@ -1,22 +1,5 @@
 #include "libvina.h"
 
-void get_metadata(char *filename)
-{
-    FILE *file = fopen(filename, "r");
-
-    if (file == NULL)
-    {
-        printf("Error: could not open file %s\n", filename);
-        exit(EXIT_FAILURE);
-    }
-
-    char line[16];
-
-    while (strcmp(fgets(line, sizeof(line), file), DELIMITER) != 0)
-        printf("%s", line);
-    
-}
-
 int main(int argc, char *argv[])
 {
     show_header();

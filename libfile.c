@@ -46,13 +46,11 @@ void write_file(list_t *list, char *filename)
 {
     FILE *file = fopen(filename, "w");
 
-    char *header = "FILENAME\tSIZE\tMODE\tUID\tGID\tMTIME\t\t\tATIME\n";
-    fwrite(header, strlen(header), 1, file);
-
     node_t *node = list->head;
 
     while (node != NULL)
     {
+        char *header;
         char m_time[BUFFER_SIZE], a_time[BUFFER_SIZE];
 
         strftime(m_time, BUFFER_SIZE, "%Y-%m-%dT%H:%M:%S", localtime(&node->st.st_mtime));
