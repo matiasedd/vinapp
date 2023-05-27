@@ -1,5 +1,22 @@
 #include "libvina.h"
 
+void get_metadata(char *filename)
+{
+    FILE *file = fopen(filename, "r");
+
+    if (file == NULL)
+    {
+        printf("Error: could not open file %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    char line[16];
+
+    while (strcmp(fgets(line, sizeof(line), file), DELIMITER) != 0)
+        printf("%s", line);
+    
+}
+
 int main(int argc, char *argv[])
 {
     show_header();
@@ -8,10 +25,13 @@ int main(int argc, char *argv[])
 
     int option;
 
-    while ((option = getopt(argc, argv, "hirx")) != -1)
+    while ((option = getopt(argc, argv, "chirx")) != -1)
     {
         switch (option)
         {
+            case 'c':
+                get_metadata(argv[2]);
+                break;
             case 'h':
                 show_help();
                 exit(EXIT_SUCCESS);
@@ -31,6 +51,6 @@ int main(int argc, char *argv[])
     }
 
     free_list(list);
-
+    
     return EXIT_SUCCESS;
 }
