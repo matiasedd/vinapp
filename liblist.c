@@ -31,6 +31,31 @@ list_t *free_list(list_t *list)
     return NULL;
 }
 
+char *replace_spaces(char *str, char c)
+{
+    char *new_str = malloc(strlen(str) + 1);
+    int i = 0;
+
+    while (*str != '\0')
+    {
+        if (*str == ' ')
+        {
+            new_str[i] = c;
+        }
+        else
+        {
+            new_str[i] = *str;
+        }
+
+        str++;
+        i++;
+    }
+
+    new_str[i] = '\0';
+
+    return new_str;
+}
+
 node_t *create_node(char *filename)
 {
     node_t *node = malloc(sizeof(node_t));
@@ -40,7 +65,7 @@ node_t *create_node(char *filename)
 
     node->next = NULL;
     node->prev = NULL;
-    node->filename = filename;
+    node->filename = replace_spaces(filename, '_');
 
     stat(filename, &node->st);
     node->content = malloc(node->st.st_size);
@@ -113,7 +138,7 @@ node_t *find_node(list_t *list, char *filename)
     {
         if (strcmp(node->filename, filename) == 0)
             return node;
-        
+
         node = node->next;
     }
 
