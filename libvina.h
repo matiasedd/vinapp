@@ -4,9 +4,7 @@
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 
-void show_help();
-
-void show_header();
+void read_text(char *filename);
 
 void handle_insert(int argc, char *argv[], list_t *list);
 

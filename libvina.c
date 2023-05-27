@@ -1,20 +1,16 @@
 #include "libvina.h"
 
-void show_help()
+void read_text(char *filename)
 {
-    printf("Mostrar ajuda aqui...\n");
-}
-
-void show_header()
-{
-    FILE *fp = fopen("header.txt", "r");
+    FILE *fp = fopen(filename, "r");
 
     struct stat st;
-    stat("header.txt", &st);
+    stat(filename, &st);
     char line[st.st_size];
 
     while (fgets(line, st.st_size, fp) != NULL)
         printf("%s", line);
+    printf("\n");
 
     fclose(fp);
 }
@@ -25,7 +21,7 @@ void handle_insert(int argc, char *argv[], list_t *list)
     {
         if (insert_file(list, argv[i]))
         {
-            printf("(%d/%d) inserted %s   \t\t", i - 2, argc - 3, argv[i]);
+            printf("(%d/%d) inserted %s \t\t\t", i - 2, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else

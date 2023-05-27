@@ -1,0 +1,10 @@
+Usage: ./vina++ [-achimrx] [ARCHIVER] [FILES]
+
+Options:
+	-a	
+	-c	list files in archive
+	-h	show this help message and exit
+	-i	insert files into archive
+	-m	
+	-r	remove files from archive
+	-x	extract files from archive
