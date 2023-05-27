@@ -25,12 +25,12 @@ void handle_insert(int argc, char *argv[], list_t *list)
     {
         if (insert_file(list, argv[i]))
         {
-            printf("(%d/%d) inserted %s   \t\t", i, argc - 3, argv[i]);
+            printf("(%d/%d) inserted %s   \t\t", i - 2, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else
         {
-            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 3, argv[i]);
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i - 2, argc - 3, argv[i]);
         }
 
         write_file(list, argv[2]);
@@ -46,12 +46,12 @@ void handle_export(int argc, char *argv[], list_t *list)
         if (export_file(list, argv[i]))
         {
             remove_file(list, argv[i]);
-            printf("(%d/%d) exported %s   \t\t", i, argc - 3, argv[i]);
+            printf("(%d/%d) exported %s   \t\t", i - 2, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else
         {
-            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 3, argv[i]);
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i - 2, argc - 3, argv[i]);
         }
     }
 
@@ -64,12 +64,12 @@ void handle_remove(int argc, char *argv[], list_t *list)
     {
         if (remove_file(list, argv[i]))
         {
-            printf("(%d/%d) removed %s   \t\t", i, argc - 3, argv[i]);
+            printf("(%d/%d) removed %s   \t\t", i - 2, argc - 3, argv[i]);
             printf("%d file(s) compressed\n", list->size);
         }
         else
         {
-            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i, argc - 3, argv[i]);
+            fprintf(stderr, "(%d/%d) ERROR: %s not found\n", i - 2, argc - 3, argv[i]);
         }
 
         write_file(list, argv[2]);

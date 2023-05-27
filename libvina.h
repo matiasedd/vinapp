@@ -1,6 +1,5 @@
 #include "libfile.h"
 
-#define START 3
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 
