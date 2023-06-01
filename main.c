@@ -1,43 +1,23 @@
-#include "libvina.h"
+#include "liblist.h"
 
-int main(int argc, char *argv[])
-{
-    read_text("header.txt");
-
-    list_t *list = create_list();
-
-    int option;
-
-    if (argc < 2)
-    {
-        printf("\t\t\tType -h for help\n\n\n\n");
-        exit(EXIT_SUCCESS);
-    }
-
-    printf("\n\n");
-    while ((option = getopt(argc, argv, "chirx")) != -1)
-    {
-        switch (option)
-        {
-            case 'c':
-                get_metadata(argv[2]);
-                break;
-            case 'h':
-                read_text("help.txt");
-                exit(EXIT_SUCCESS);
-            case 'i':
-                handle_insert(argc, argv, list);
-                break;
-            case 'x':
-                handle_export(argc, argv, list);
-                break;
-            case 'r':
-                handle_remove(argc, argv, list);
-                break;
-        }
-    }
-
-    free_list(list);
+int main() {
+    linked_list_t *list = create_linked_list();
     
-    return EXIT_SUCCESS;
+    node_t *node1 = create_node(1);
+    insert_node(list, node1);
+    node_t *node2 = create_node(2);
+    insert_node(list, node2);
+    node_t *node3 = create_node(3);
+    insert_node(list, node3);
+    node_t *node4 = create_node(4);
+    insert_node(list, node4);
+    node_t *node5 = create_node(5);
+    insert_node(list, node5);
+
+    move_node(list, node2, node5);
+    
+    print_linked_list(list);
+    destroy_linked_list(list);
+    
+    return 0;
 }

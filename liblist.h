@@ -1,44 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <getopt.h>
-#include <time.h>
-#include <sys/stat.h>
 
-#define BUFFER_SIZE 32
-
-struct node
-{
-    char *filename;
-    char *content;
-    struct stat st;
-
+struct node {
+    int data;
     struct node *next;
-    struct node *prev;
+};
+
+struct linked_list {
+    int size;
+    struct node *head;
+    struct node *tail;
 };
 
 typedef struct node node_t;
 
-struct list
-{
-    int size;
-    node_t *head;
-    node_t *tail;
-};
+typedef struct linked_list linked_list_t;
 
-typedef struct list list_t;
+node_t *create_node(int data);
 
-list_t *create_list(void);
+node_t *destroy_node(node_t *node);
 
-list_t *free_list(list_t *list);
+linked_list_t *create_linked_list();
 
-node_t *create_node(char *filename);
+linked_list_t *destroy_linked_list(linked_list_t *list);
 
-node_t *find_node(list_t *list, char *filename);
+node_t *find_node(linked_list_t *list, int data);
 
-int insert_node(list_t *list, node_t *node);
+node_t *insert_node(linked_list_t *list, node_t *node);
 
-int remove_node(list_t *list, node_t *node);
+node_t *remove_node(linked_list_t *list, node_t *node);
 
-void print_list(list_t *list);
+node_t *move_node(linked_list_t *list, node_t *source, node_t *target);
+
+void print_linked_list(linked_list_t *list);
