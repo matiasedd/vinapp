@@ -1,10 +1,10 @@
 #include "liblist.h"
 
-node_t *create_node(int data)
+node_t *create_node(char *filename)
 {
     node_t *node = malloc(sizeof(node_t));
  
-    node->data = data;
+    node->filename = filename;
     node->next = NULL;
  
     return node;
@@ -44,13 +44,13 @@ linked_list_t *destroy_linked_list(linked_list_t *list)
     return NULL;
 }
 
-node_t *find_node(linked_list_t *list, int data)
+node_t *find_node(linked_list_t *list, char *filename)
 {
     node_t *node = list->head;
     
     while (node != NULL)
     {
-        if (node->data == data)
+        if (node->filename == filename)
             return node;
         
         node = node->next;
@@ -164,7 +164,7 @@ void print_linked_list(linked_list_t *list)
     
     while (node != NULL)
     {
-        printf("%d ", node->data);
+        printf("%s\n", node->filename);
         node = node->next;
     }
     
