@@ -1,5 +1,10 @@
 #include "liblist.h"
 
+int is_list_empty(linked_list_t *list)
+{
+    return list->size == 0;
+}
+
 node_t *create_node(char *filename)
 {
     node_t *node = malloc(sizeof(node_t));
@@ -44,7 +49,7 @@ linked_list_t *destroy_linked_list(linked_list_t *list)
     return NULL;
 }
 
-node_t *find_node(linked_list_t *list, char *filename)
+node_t *find_node_by_name(linked_list_t *list, char *filename)
 {
     node_t *node = list->head;
     
