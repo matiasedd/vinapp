@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
                     printf("INSERTED\n");
                 else
                     printf("ERROR: file not found\n");
+                
+                refresh_backup(argv[2], list);
             }
             break;
         case 'r':
@@ -32,6 +34,8 @@ int main(int argc, char *argv[])
                     printf("REMOVED\n");
                 else
                     printf("ERROR: something went wrong\n");
+                
+                refresh_backup(argv[2], list);
             }
             break;
         case 'h':

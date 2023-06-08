@@ -5,6 +5,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <getopt.h>
+#include <string.h>
 #include <sys/stat.h>
 
 #define SUCCESS 0
