@@ -54,4 +54,6 @@ void read_file(char *filename)
     while ((c = fgetc(file)) != EOF)
         printf("%c", c);
     printf("\n");
+
+    fclose(file);
 }

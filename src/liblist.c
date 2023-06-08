@@ -17,11 +17,14 @@ node_t *create_node(char *name)
     node->data = malloc(node->stat.st_size);
     fread(node->data, node->stat.st_size, 1, file);
 
+    fclose(file);
+
     return node;
 }
 
 node_t *destroy_node(node_t *node)
 {
+    free(node->data);
     free(node);
 
     return NULL;
