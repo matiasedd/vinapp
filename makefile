@@ -25,8 +25,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 # Regra de ligação
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $@
+	$(CC) $(OBJS) -o bin/$@
 
 # Regra para limpar arquivos gerados
 clean:
-	rm -f $(OBJDIR)/*.o $(TARGET)
+	rm -f $(OBJDIR)/*.o bin/$(TARGET)
