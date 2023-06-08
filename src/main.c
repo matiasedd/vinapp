@@ -2,9 +2,11 @@
 
 int main(int argc, char *argv[])
 {
-    int opt;
-
+    read_file("assets/banner.txt");
+    
     linked_list_t *list = create_linked_list();
+
+    int opt;
 
     while ((opt = getopt(argc, argv, "h")) != -1) {
         switch (opt) {
