@@ -5,11 +5,11 @@ int is_list_empty(linked_list_t *list)
     return list->size == 0;
 }
 
-node_t *create_node(char *filename)
+node_t *create_node(char *name)
 {
     node_t *node = malloc(sizeof(node_t));
  
-    node->filename = filename;
+    node->name = name;
     node->next = NULL;
  
     return node;
@@ -49,13 +49,13 @@ linked_list_t *destroy_linked_list(linked_list_t *list)
     return NULL;
 }
 
-node_t *find_node_by_name(linked_list_t *list, char *filename)
+node_t *find_node_by_name(linked_list_t *list, char *name)
 {
     node_t *node = list->head;
     
     while (node != NULL)
     {
-        if (node->filename == filename)
+        if (node->name == name)
             return node;
         
         node = node->next;
@@ -169,7 +169,7 @@ void print_linked_list(linked_list_t *list)
     
     while (node != NULL)
     {
-        printf("%s\n", node->filename);
+        printf("%s\n", node->name);
         node = node->next;
     }
     

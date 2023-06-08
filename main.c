@@ -16,5 +16,5 @@ int main()
 
     destroy_linked_list(list);
 
-    return 0;
+    return SUCCESS;
 }

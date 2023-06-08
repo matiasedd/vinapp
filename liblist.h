@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 struct node {
-    char *filename;
+    char *name;
     struct node *next;
 };
 
@@ -18,7 +18,7 @@ typedef struct linked_list linked_list_t;
 
 int is_list_empty(linked_list_t *list);
 
-node_t *create_node(char *filename);
+node_t *create_node(char *name);
 
 node_t *destroy_node(node_t *node);
 
@@ -26,7 +26,7 @@ linked_list_t *create_linked_list();
 
 linked_list_t *destroy_linked_list(linked_list_t *list);
 
-node_t *find_node_by_name(linked_list_t *list, char *filename);
+node_t *find_node_by_name(linked_list_t *list, char *name);
 
 node_t *insert_node(linked_list_t *list, node_t *node);
 

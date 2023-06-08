@@ -1,8 +1,8 @@
 #include "libvina.h"
 
-int insert_member(char *filename, linked_list_t *list)
+int insert_member(char *name, linked_list_t *list)
 {
-    node_t *node = create_node(filename);
+    node_t *node = create_node(name);
     insert_node(list, node);
 
     return SUCCESS;
@@ -21,12 +21,12 @@ int move_member(char *source, char *target, linked_list_t *list)
     return SUCCESS;
 }
 
-int remove_member(char *filename, linked_list_t *list)
+int remove_member(char *name, linked_list_t *list)
 {
     if (is_list_empty(list))
         return FAILURE;
 
-    node_t *node = find_node_by_name(list, filename);
+    node_t *node = find_node_by_name(list, name);
 
     if (node == NULL)
         return FAILURE;
