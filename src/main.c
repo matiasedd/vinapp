@@ -1,18 +1,11 @@
 #include "libvina.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     linked_list_t *list = create_linked_list();
 
-    insert_member("arq.txt", list);
-    insert_member("foto.jpg", list);
-    insert_member("despesas.ods", list);
-
-    move_member("arq.txt", "despesas.ods", list);
-
-    remove_member("foto.jpg", list);
-    remove_member("arq.txt", list);
-    remove_member("despesas.ods", list);
+    for (int i = 1; i < argc; i++)
+        insert_member(argv[i], list);
 
     destroy_linked_list(list);
 

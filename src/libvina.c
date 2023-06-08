@@ -2,8 +2,15 @@
 
 int insert_member(char *name, linked_list_t *list)
 {
+    if (access(name, F_OK) == -1)
+    {
+        fprintf(stderr, "ERROR: %s not found\n", name);
+        return FAILURE;
+    }
+
     node_t *node = create_node(name);
     insert_node(list, node);
+    printf("%s inserted\n", name);
 
     return SUCCESS;
 }

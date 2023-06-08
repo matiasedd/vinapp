@@ -172,6 +172,4 @@ void print_linked_list(linked_list_t *list)
         printf("%s\n", node->name);
         node = node->next;
     }
-    
-    printf("\n");
 }
