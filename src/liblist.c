@@ -173,6 +173,9 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
 
 void print_linked_list(linked_list_t *list)
 {
+    if (is_list_empty(list))
+        printf("(empty)\n");
+
     node_t *node = list->head;
 
     while (node != NULL)

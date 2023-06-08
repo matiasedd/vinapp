@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     int opt;
 
-    while ((opt = getopt(argc, argv, "ihr")) != -1)
+    while ((opt = getopt(argc, argv, "irch")) != -1)
     {
         switch (opt)
         {
@@ -37,6 +37,9 @@ int main(int argc, char *argv[])
                 
                 refresh_backup(argv[2], list);
             }
+            break;
+        case 'c':
+            print_linked_list(list);
             break;
         case 'h':
             read_file("assets/help.txt");
