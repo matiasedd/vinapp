@@ -1,9 +1,13 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/stat.h>
+
+#include "libutils.h"
 
 struct node {
     char *name;
+    void *data;
+    struct stat stat;
     struct node *next;
 };
 

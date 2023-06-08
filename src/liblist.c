@@ -8,59 +8,64 @@ int is_list_empty(linked_list_t *list)
 node_t *create_node(char *name)
 {
     node_t *node = malloc(sizeof(node_t));
- 
-    node->name = name;
+
     node->next = NULL;
- 
+    node->name = name;
+    stat(name, &node->stat);
+
+    FILE *file = fopen(name, "rb");
+    node->data = malloc(node->stat.st_size);
+    fread(node->data, node->stat.st_size, 1, file);
+
     return node;
 }
 
 node_t *destroy_node(node_t *node)
 {
     free(node);
- 
+
     return NULL;
 }
 
 linked_list_t *create_linked_list()
 {
     linked_list_t *list = malloc(sizeof(linked_list_t));
-    
+
     list->size = 0;
     list->head = NULL;
     list->tail = NULL;
-    
+
     return list;
 }
 
 linked_list_t *destroy_linked_list(linked_list_t *list)
 {
     node_t *node = list->head;
-    
+
     while (node != NULL)
     {
         node_t *next = node->next;
         destroy_node(node);
         node = next;
     }
-    
+
     free(list);
-    
+
     return NULL;
 }
 
 node_t *find_node_by_name(linked_list_t *list, char *name)
 {
     node_t *node = list->head;
-    
+
     while (node != NULL)
     {
         if (node->name == name)
             return node;
-        
+
         node = node->next;
     }
-    
+
     return NULL;
 }
 
@@ -76,9 +81,9 @@ node_t *insert_node(linked_list_t *list, node_t *node)
         list->tail->next = node;
         list->tail = node;
     }
-    
+
     list->size++;
-    
+
     return node;
 }
 
@@ -94,18 +99,18 @@ node_t *remove_node(linked_list_t *list, node_t *node)
     else
     {
         node_t *prev = list->head;
-        
+
         while (prev->next != node)
             prev = prev->next;
-        
+
         prev->next = node->next;
-        
+
         if (prev->next == NULL)
             list->tail = prev;
     }
-    
+
     list->size--;
-    
+
     return destroy_node(node);
 }
 
@@ -124,12 +129,12 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
     else
     {
         node_t *prev = list->head;
-        
+
         while (prev->next != source)
             prev = prev->next;
-        
+
         prev->next = source->next;
-        
+
         if (prev->next == NULL)
             list->tail = prev;
     }
@@ -166,10 +171,15 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
 void print_linked_list(linked_list_t *list)
 {
     node_t *node = list->head;
-    
+
     while (node != NULL)
     {
-        printf("%s\n", node->name);
+        print_permissions(node->stat);
+        print_owner(node->stat);
+        print_size(node->stat);
+        print_time(node->stat);
+        print_name(node->name);
+
         node = node->next;
     }
 }

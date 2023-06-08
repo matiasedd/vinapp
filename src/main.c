@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
         insert_member(argv[i], list);
 
+    print_linked_list(list);
     destroy_linked_list(list);
 
     return SUCCESS;
