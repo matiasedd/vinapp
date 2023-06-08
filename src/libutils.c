@@ -1,50 +1,42 @@
 #include "libutils.h"
 
-void print_permissions(struct stat st)
+char* get_metadata(char* name, struct stat st)
 {
-    printf("%s", st.st_mode & S_IFDIR ? "d" : "-");
-    printf("%s", st.st_mode & S_IRUSR ? "r" : "-");
-    printf("%s", st.st_mode & S_IWUSR ? "w" : "-");
-    printf("%s", st.st_mode & S_IXUSR ? "x" : "-");
-    printf("%s", st.st_mode & S_IRGRP ? "r" : "-");
-    printf("%s", st.st_mode & S_IWGRP ? "w" : "-");
-    printf("%s", st.st_mode & S_IXGRP ? "x" : "-");
-    printf("%s", st.st_mode & S_IROTH ? "r" : "-");
-    printf("%s", st.st_mode & S_IWOTH ? "w" : "-");
-    printf("%s", st.st_mode & S_IXOTH ? "x" : "-");
-}
+    char* metadata = malloc(sizeof(char) * 100);
 
-void print_owner(struct stat st)
-{
-    struct passwd *pwd = getpwuid(st.st_uid);
-    struct group *grp = getgrgid(st.st_gid);
-    printf(" %s/%s ", pwd->pw_name, grp->gr_name);
-}
+    sprintf(metadata, "%s%s%s%s%s%s%s%s%s%s",
+        (st.st_mode & S_IFDIR) ? "d" : "-",
+        (st.st_mode & S_IRUSR) ? "r" : "-",
+        (st.st_mode & S_IWUSR) ? "w" : "-",
+        (st.st_mode & S_IXUSR) ? "x" : "-",
+        (st.st_mode & S_IRGRP) ? "r" : "-",
+        (st.st_mode & S_IWGRP) ? "w" : "-",
+        (st.st_mode & S_IXGRP) ? "x" : "-",
+        (st.st_mode & S_IROTH) ? "r" : "-",
+        (st.st_mode & S_IWOTH) ? "w" : "-",
+        (st.st_mode & S_IXOTH) ? "x" : "-");
 
-void print_time(struct stat st)
-{
+    struct passwd* pwd = getpwuid(st.st_uid);
+    struct group* grp = getgrgid(st.st_gid);
+    sprintf(metadata + 10, " %s/%s", pwd->pw_name, grp->gr_name);
+
     char formatted_time[20];
-    strftime(formatted_time, 20, "%Y-%m-%d %H:%M", localtime(&st.st_mtime));
-    printf(" %s", formatted_time);
+    strftime(formatted_time, sizeof(formatted_time), "%Y-%m-%d %H:%M", localtime(&st.st_mtime));
+
+    sprintf(metadata + strlen(metadata), " %8ld", st.st_size);
+    sprintf(metadata + strlen(metadata), " %s", formatted_time);
+    sprintf(metadata + strlen(metadata), " %s\n", name);
+
+    return metadata;
 }
 
-void print_size(struct stat st)
+void read_file(char *name)
 {
-    printf("%8ld", st.st_size);
-}
-
-void print_name(char *name)
-{
-    printf(" %s\n", name);
-}
-
-void read_file(char *filename)
-{
-    FILE *file = fopen(filename, "r");
+    FILE *file = fopen(name, "r");
 
     if (file == NULL)
     {
-        fprintf(stderr, "ERROR: %s not found\n", filename);
+        fprintf(stderr, "ERROR: %s not found\n", name);
         exit(FAILURE);
     }
 

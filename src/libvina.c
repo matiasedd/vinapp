@@ -50,8 +50,9 @@ int refresh_backup(char *name, linked_list_t *list)
 
     while (node != NULL)
     {
-        fwrite(node->name, sizeof(char), strlen(node->name), file);
-        fwrite("\n", sizeof(char), 1, file);
+        char *metadata = get_metadata(node->name, node->stat);
+        fwrite(metadata, strlen(metadata), 1, file);
+        free(metadata);
         node = node->next;
     }
 

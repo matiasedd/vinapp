@@ -177,12 +177,9 @@ void print_linked_list(linked_list_t *list)
 
     while (node != NULL)
     {
-        print_permissions(node->stat);
-        print_owner(node->stat);
-        print_size(node->stat);
-        print_time(node->stat);
-        print_name(node->name);
-
+        char *metadata = get_metadata(node->name, node->stat);
+        printf("%s", metadata);
+        free(metadata);
         node = node->next;
     }
 }

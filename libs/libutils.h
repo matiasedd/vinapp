@@ -11,14 +11,6 @@
 #define SUCCESS 0
 #define FAILURE 1
 
-void print_permissions(struct stat st);
+void read_file(char *name);
 
-void print_owner(struct stat st);
-
-void print_time(struct stat st);
-
-void print_size(struct stat st);
-
-void print_name(char *name);
-
-void read_file(char *filename);
+char *get_metadata(char *name, struct stat st);
