@@ -30,7 +30,7 @@ void print_time(struct stat st)
 
 void print_size(struct stat st)
 {
-    printf(" %ld\t", st.st_size);
+    printf("\t%ld", st.st_size);
 }
 
 void print_name(char *name)
