@@ -1,15 +1,32 @@
-CC = gcc
-CFLAGS = -Wall -g
+# Nome do programa
 TARGET = vina++
 
-all: liblist.o libvina.o
-	$(CC) main.c $(CFLAGS) liblist.o libvina.o -o $(TARGET)
+# Diretórios
+SRCDIR = src
+LIBDIR = libs
+OBJDIR = objects
 
-liblist.o: liblist.c liblist.h
-	$(CC) -c liblist.c $(CFLAGS)
+# Compilador
+CC = gcc
 
-libvina.o: libvina.c libvina.h liblist.h
-	$(CC) -c libvina.c $(CFLAGS)
+# Flags de compilação
+CFLAGS = -Wall -I$(LIBDIR)
 
+# Arquivos fonte
+SRCS = $(wildcard $(SRCDIR)/*.c)
+OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+
+# Regra principal
+all: $(TARGET)
+
+# Regra de compilação dos objetos
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Regra de ligação
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $@
+
+# Regra para limpar arquivos gerados
 clean:
-	rm -f *.o $(TARGET)
+	rm -f $(OBJDIR)/*.o $(TARGET)
