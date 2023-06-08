@@ -1,0 +1,11 @@
+Usage: vina++ [-iamxrch] [ARCHIVER] [MEMBERS]
+
+Options:
+
+   -i		insert members into archiver
+   -a		insert members into archiver if they are newer
+   -m		move source member to immediately after target member
+   -x		extract members from archiver
+   -r		remove members from archiver
+   -c		list members in archiver
+   -h		show this help message and exit

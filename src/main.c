@@ -2,12 +2,21 @@
 
 int main(int argc, char *argv[])
 {
+    int opt;
+
     linked_list_t *list = create_linked_list();
 
-    for (int i = 1; i < argc; i++)
-        insert_member(argv[i], list);
+    while ((opt = getopt(argc, argv, "h")) != -1) {
+        switch (opt) {
+            case 'h':
+                read_file("assets/help.txt");
+                break;
+            default:
+                read_file("assets/help.txt");
+                break;
+        }
+    }
 
-    print_linked_list(list);
     destroy_linked_list(list);
 
     return SUCCESS;

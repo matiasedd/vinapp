@@ -42,3 +42,21 @@ int remove_member(char *name, linked_list_t *list)
 
     return SUCCESS;
 }
+
+void read_file(char *filename)
+{
+    FILE *file = fopen(filename, "r");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "ERROR: %s not found\n", filename);
+        exit(FAILURE);
+    }
+
+    char c;
+
+    printf("\n");
+    while ((c = fgetc(file)) != EOF)
+        printf("%c", c);
+    printf("\n");
+}
