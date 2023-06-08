@@ -18,7 +18,7 @@ void print_owner(struct stat st)
 {
     struct passwd *pwd = getpwuid(st.st_uid);
     struct group *grp = getgrgid(st.st_gid);
-    printf(" %s/%s", pwd->pw_name, grp->gr_name);
+    printf(" %s/%s ", pwd->pw_name, grp->gr_name);
 }
 
 void print_time(struct stat st)
@@ -30,7 +30,7 @@ void print_time(struct stat st)
 
 void print_size(struct stat st)
 {
-    printf("\t%ld", st.st_size);
+    printf("%8ld", st.st_size);
 }
 
 void print_name(char *name)
