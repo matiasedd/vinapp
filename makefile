@@ -27,6 +27,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o bin/$@
 
+# Regra para criar o diretório bin, se não existir
+$(shell mkdir -p bin)
+
 # Regra para limpar arquivos gerados
 clean:
 	rm -f $(OBJDIR)/*.o bin/$(TARGET)
