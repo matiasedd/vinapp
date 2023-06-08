@@ -23,8 +23,8 @@ void print_owner(struct stat st)
 
 void print_time(struct stat st)
 {
-    char formatted_time[BUFFER_SIZE];
-    strftime(formatted_time, BUFFER_SIZE, "%Y-%m-%d %H:%M", localtime(&st.st_mtime));
+    char formatted_time[20];
+    strftime(formatted_time, 20, "%Y-%m-%d %H:%M", localtime(&st.st_mtime));
     printf(" %s", formatted_time);
 }
 
@@ -36,4 +36,22 @@ void print_size(struct stat st)
 void print_name(char *name)
 {
     printf(" %s\n", name);
+}
+
+void read_file(char *filename)
+{
+    FILE *file = fopen(filename, "r");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "ERROR: %s not found\n", filename);
+        exit(FAILURE);
+    }
+
+    char c;
+
+    printf("\n");
+    while ((c = fgetc(file)) != EOF)
+        printf("%c", c);
+    printf("\n");
 }
