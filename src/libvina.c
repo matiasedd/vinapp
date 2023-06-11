@@ -41,7 +41,7 @@ int remove_member(char *name, linked_list_t *list)
 
 int refresh_backup(char *name, linked_list_t *list)
 {
-    FILE *file = fopen(name, "wb");
+    FILE *file = fopen(name, "ab");
 
     if (file == NULL)
         return FAILURE;
@@ -50,9 +50,12 @@ int refresh_backup(char *name, linked_list_t *list)
 
     while (node != NULL)
     {
-        char *metadata = get_metadata(node->name, node->stat);
+        char *metadata = malloc(sizeof(char) * 100);
+        
+        sprintf(metadata, "%o %d %d %ld %ld %ld\n", node->stat.st_mode, node->stat.st_uid, node->stat.st_gid, node->stat.st_atime, node->stat.st_mtime, node->stat.st_mtime);
         fwrite(metadata, strlen(metadata), 1, file);
         free(metadata);
+        
         node = node->next;
     }
 

@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
                 if (insert_member(argv[i], list) == SUCCESS)
                     printf("INSERTED\n");
                 else
-                    printf("ERROR: file not found\n");
-                
-                refresh_backup(argv[2], list);
+                    printf("ERROR: file not found\n");    
             }
+            
+            refresh_backup(argv[2], list);
             break;
         case 'r':
             for (int i = 3; i < argc; i++)
@@ -33,10 +33,10 @@ int main(int argc, char *argv[])
                 if (remove_member(argv[i], list) == SUCCESS)
                     printf("REMOVED\n");
                 else
-                    printf("ERROR: something went wrong\n");
-                
-                refresh_backup(argv[2], list);
+                    printf("ERROR: something went wrong\n");    
             }
+            
+            refresh_backup(argv[2], list);
             break;
         case 'c':
             print_linked_list(list);
