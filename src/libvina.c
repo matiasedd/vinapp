@@ -39,6 +39,35 @@ int remove_member(char *name, linked_list_t *list)
     return SUCCESS;
 }
 
+int load_backup(char *name, linked_list_t *list)
+{
+    FILE *file = fopen(name, "rb");
+
+    if (file == NULL)
+        return FAILURE;
+
+    char *metadata = malloc(sizeof(char) * 100);
+
+    if (metadata == NULL)
+    {
+        fclose(file);
+        return FAILURE;
+    }
+
+    while (fread(metadata, 1, 1, file) != 0)
+    {
+        if (strcmp(metadata, DIR_DELIMITER) == 0)
+            break;
+
+        printf("%s", metadata);
+    }
+
+    fclose(file);
+    free(metadata);
+
+    return SUCCESS;
+}
+
 int refresh_backup(char *name, linked_list_t *list)
 {
     FILE *file = fopen(name, "ab");
@@ -51,14 +80,15 @@ int refresh_backup(char *name, linked_list_t *list)
     while (node != NULL)
     {
         char *metadata = malloc(sizeof(char) * 100);
-        
-        sprintf(metadata, "%o %d %d %ld %ld %ld\n", node->stat.st_mode, node->stat.st_uid, node->stat.st_gid, node->stat.st_atime, node->stat.st_mtime, node->stat.st_mtime);
+
+        sprintf(metadata, "%d %d %d %ld %ld %s\n", node->stat.st_mode, node->stat.st_uid, node->stat.st_gid, node->stat.st_atime, node->stat.st_mtime, node->name);
         fwrite(metadata, strlen(metadata), 1, file);
         free(metadata);
-        
+
         node = node->next;
     }
 
+    fwrite(DIR_DELIMITER, sizeof(char), 1, file);
     node = list->head;
 
     while (node != NULL)

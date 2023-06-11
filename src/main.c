@@ -2,9 +2,10 @@
 
 int main(int argc, char *argv[])
 {
-    read_file("assets/banner.txt");
-
     linked_list_t *list = create_linked_list();
+
+    load_backup(argv[2], list);
+    read_file("assets/banner.txt");
 
     int opt;
 
@@ -50,8 +51,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    printf("\n");
-    print_linked_list(list);
     destroy_linked_list(list);
 
     return SUCCESS;
