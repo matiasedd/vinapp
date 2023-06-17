@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
                 printf("[%d/%d] %-24s", i - 2, argc - 3, argv[i]);
                 extract_member(argv[i], list);
             }
+            refresh_backup(archiver, list);
             printf("\n");
             break;
         case 'r':

@@ -46,6 +46,7 @@ int extract_member(char *name, linked_list_t *list)
     }
 
     extract_node(list, node);
+    remove_node(list, node);
     printf("INFO: extracted successfully\n");
 
     return SUCCESS;
