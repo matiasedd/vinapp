@@ -2,12 +2,12 @@
 
 int main(int argc, char *argv[])
 {
+    int opt;
+    char *archiver = argv[2];
     linked_list_t *list = create_linked_list();
 
-    load_backup(argv[2], list);
+    load_backup(archiver, list);
     read_file("assets/banner.txt");
-
-    int opt;
 
     while ((opt = getopt(argc, argv, "irch")) != -1)
     {
@@ -16,28 +16,20 @@ int main(int argc, char *argv[])
         case 'i':
             for (int i = 3; i < argc; i++)
             {
-                printf("[%d/%d] %-24s", i - 2, argc - 3, argv[i]);
-                
-                if (insert_member(argv[i], list) == SUCCESS)
-                    printf("INSERTED\n");
-                else
-                    printf("ERROR: file not found\n");    
+                printf("[%d/%d] %-32s", i - 2, argc - 3, argv[i]);
+                insert_member(argv[i], list);
+                printf("\n");
             }
-            
-            refresh_backup(argv[2], list);
+            refresh_backup(archiver, list);
             break;
         case 'r':
             for (int i = 3; i < argc; i++)
             {
                 printf("[%d/%d] %-24s", i - 2, argc - 3, argv[i]);
-                
-                if (remove_member(argv[i], list) == SUCCESS)
-                    printf("REMOVED\n");
-                else
-                    printf("ERROR: something went wrong\n");    
+                remove_member(argv[i], list);
+                printf("\n");
             }
-            
-            refresh_backup(argv[2], list);
+            refresh_backup(archiver, list);
             break;
         case 'c':
             print_linked_list(list);
