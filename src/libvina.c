@@ -3,10 +3,14 @@
 int insert_member(char *name, linked_list_t *list)
 {
     if (access(name, F_OK) == -1)
+    {
+        printf("ERROR: %s does not exist\n", name);
         return FAILURE;
+    }
 
     node_t *node = create_node(name);
     insert_node(list, node);
+    printf("INSERTED\n");
 
     return SUCCESS;
 }
@@ -27,14 +31,21 @@ int move_member(char *source, char *target, linked_list_t *list)
 int remove_member(char *name, linked_list_t *list)
 {
     if (is_list_empty(list))
+    {
+        printf("ERROR: archiver is empty\n");
         return FAILURE;
+    }
 
     node_t *node = find_node_by_name(list, name);
 
     if (node == NULL)
+    {
+        printf("ERROR: %s is not in the archiver\n", name);
         return FAILURE;
+    }
 
     remove_node(list, node);
+    printf("REMOVED\n");
 
     return SUCCESS;
 }
@@ -45,7 +56,7 @@ int load_backup(char *archiver, linked_list_t *list)
 
     if (file == NULL)
         return FAILURE;
-    
+
     int length;
     struct stat stat;
     char *name = malloc(sizeof(char) * 256);
@@ -71,7 +82,7 @@ int load_backup(char *archiver, linked_list_t *list)
 
         if (node->name == NULL)
             return FAILURE;
-            
+
         strncpy(node->name, name, length);
         insert_node(list, node);
     }
@@ -94,16 +105,16 @@ int refresh_backup(char *name, linked_list_t *list)
     while (node != NULL)
     {
         int name_length = strlen(node->name);
-        
+
         fwrite(&name_length, 1, sizeof(int), file);
         fwrite(node->name, 1, strlen(node->name), file);
         fwrite(&node->stat, 1, sizeof(struct stat), file);
-        
+
         node = node->next;
     }
 
     int delimiter = -1;
-    
+
     fwrite(&delimiter, 1, sizeof(int), file);
     fclose(file);
 
