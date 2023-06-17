@@ -1,5 +1,41 @@
 #include "libutils.h"
 
+void read_file(char *name)
+{
+    FILE *file = fopen(name, "r");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "ERROR: %s not found\n", name);
+        exit(FAILURE);
+    }
+
+    char c;
+
+    printf("\n");
+    while ((c = fgetc(file)) != EOF)
+        printf("%c", c);
+    printf("\n");
+
+    fclose(file);
+}
+
+char *replace(char *string, char old, char replacement)
+{
+    char *result = malloc(sizeof(char) * strlen(string));
+
+    if (result == NULL)
+    {
+        fprintf(stderr, "ERROR: Could not allocate memory for result\n");
+        exit(FAILURE);
+    }
+
+    for (int i = 0; i < strlen(string); i++)
+        result[i] = string[i] == old ? replacement : string[i];
+
+    return result;
+}
+
 char* get_metadata(char* name, struct stat st)
 {
     char* metadata = malloc(sizeof(char) * 100);
@@ -28,24 +64,4 @@ char* get_metadata(char* name, struct stat st)
     sprintf(metadata + strlen(metadata), " %s\n", name);
 
     return metadata;
-}
-
-void read_file(char *name)
-{
-    FILE *file = fopen(name, "r");
-
-    if (file == NULL)
-    {
-        fprintf(stderr, "ERROR: %s not found\n", name);
-        exit(FAILURE);
-    }
-
-    char c;
-
-    printf("\n");
-    while ((c = fgetc(file)) != EOF)
-        printf("%c", c);
-    printf("\n");
-
-    fclose(file);
 }

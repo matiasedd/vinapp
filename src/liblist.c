@@ -9,8 +9,14 @@ node_t *create_node(char *name)
 {
     node_t *node = malloc(sizeof(node_t));
 
+    if (node == NULL)
+    {
+        fprintf(stderr, "ERROR: Could not allocate memory for node\n");
+        exit(FAILURE);
+    }
+
     node->next = NULL;
-    node->name = name;
+    node->name = replace(name, ' ', SPACE_REPLACEMENT);
     stat(name, &node->stat);
 
     FILE *file = fopen(name, "rb");
