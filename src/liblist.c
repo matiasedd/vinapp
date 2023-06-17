@@ -174,8 +174,12 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
 void print_linked_list(linked_list_t *list)
 {
     if (is_list_empty(list))
-        printf("The archiver is empty.\n");
+    {
+        printf("The archiver is empty. Use the -i flag to insert files.\n\n");
+        return;
+    }
 
+    printf("There are %d files in the archiver:\n\n", list->size);
     node_t *node = list->head;
 
     while (node != NULL)
