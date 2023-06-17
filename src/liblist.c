@@ -63,7 +63,7 @@ node_t *find_node_by_name(linked_list_t *list, char *name)
 
     while (node != NULL)
     {
-        if (node->name == name)
+        if (strcmp(node->name, name) == 0)
             return node;
 
         node = node->next;
@@ -174,7 +174,7 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
 void print_linked_list(linked_list_t *list)
 {
     if (is_list_empty(list))
-        printf("(empty)\n");
+        printf("The archiver is empty.\n");
 
     node_t *node = list->head;
 
@@ -185,4 +185,6 @@ void print_linked_list(linked_list_t *list)
         free(metadata);
         node = node->next;
     }
+
+    printf("\n");
 }
