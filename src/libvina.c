@@ -60,8 +60,19 @@ int load_backup(char *archiver, linked_list_t *list)
         fread(name, 1, length, file);
         fread(&stat, 1, sizeof(struct stat), file);
 
-        node_t *node = create_node(name);
+        node_t *node = malloc(sizeof(node_t));
+
+        if (node == NULL)
+            return FAILURE;
+
+        node->next = NULL;
         node->stat = stat;
+        node->name = malloc(sizeof(char) * length);
+
+        if (node->name == NULL)
+            return FAILURE;
+            
+        strncpy(node->name, name, length);
         insert_node(list, node);
     }
 
