@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     load_backup(archiver, list);
     read_file("assets/banner.txt");
 
-    while ((opt = getopt(argc, argv, "irch")) != -1)
+    while ((opt = getopt(argc, argv, "imrch")) != -1)
     {
         switch (opt)
         {
@@ -18,18 +18,27 @@ int main(int argc, char *argv[])
             {
                 printf("[%d/%d] %-32s", i - 2, argc - 3, argv[i]);
                 insert_member(argv[i], list);
-                printf("\n");
             }
             refresh_backup(archiver, list);
+            printf("\n");
+            break;
+        case 'm':
+            char *source = argv[3];
+            char *target = argv[4];
+            
+            move_member(source, target, list);
+            refresh_backup(archiver, list);
+            print_linked_list(list);
+            
             break;
         case 'r':
             for (int i = 3; i < argc; i++)
             {
                 printf("[%d/%d] %-24s", i - 2, argc - 3, argv[i]);
                 remove_member(argv[i], list);
-                printf("\n");
             }
             refresh_backup(archiver, list);
+            printf("\n");
             break;
         case 'c':
             print_linked_list(list);
