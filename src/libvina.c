@@ -10,7 +10,6 @@ int insert_member(char *name, linked_list_t *list)
 
     node_t *node = create_node(name);
     insert_node(list, node);
-    printf("INSERTED\n");
 
     return SUCCESS;
 }
@@ -45,7 +44,6 @@ int remove_member(char *name, linked_list_t *list)
     }
 
     remove_node(list, node);
-    printf("REMOVED\n");
 
     return SUCCESS;
 }
