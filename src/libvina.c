@@ -39,38 +39,41 @@ int remove_member(char *name, linked_list_t *list)
     return SUCCESS;
 }
 
-int load_backup(char *name, linked_list_t *list)
+int load_backup(char *archiver, linked_list_t *list)
 {
-    FILE *file = fopen(name, "rb");
+    FILE *file = fopen(archiver, "rb");
 
     if (file == NULL)
         return FAILURE;
+    
+    int length;
+    struct stat stat;
+    char *name = malloc(sizeof(char) * 256);
 
-    char *metadata = malloc(sizeof(char) * 100);
-
-    if (metadata == NULL)
+    while (1)
     {
-        fclose(file);
-        return FAILURE;
-    }
+        fread(&length, 1, sizeof(int), file);
 
-    while (fread(metadata, 1, 1, file) != 0)
-    {
-        if (strcmp(metadata, DIR_DELIMITER) == 0)
+        if (length == -1)
             break;
 
-        printf("%s", metadata);
+        fread(name, 1, length, file);
+        fread(&stat, 1, sizeof(struct stat), file);
+
+        node_t *node = create_node(name);
+        node->stat = stat;
+        insert_node(list, node);
     }
 
+    free(name);
     fclose(file);
-    free(metadata);
 
     return SUCCESS;
 }
 
 int refresh_backup(char *name, linked_list_t *list)
 {
-    FILE *file = fopen(name, "ab");
+    FILE *file = fopen(name, "wb");
 
     if (file == NULL)
         return FAILURE;
@@ -79,24 +82,18 @@ int refresh_backup(char *name, linked_list_t *list)
 
     while (node != NULL)
     {
-        char *metadata = malloc(sizeof(char) * 100);
-
-        sprintf(metadata, "%d %d %d %ld %ld %s\n", node->stat.st_mode, node->stat.st_uid, node->stat.st_gid, node->stat.st_atime, node->stat.st_mtime, node->name);
-        fwrite(metadata, strlen(metadata), 1, file);
-        free(metadata);
-
+        int name_length = strlen(node->name);
+        
+        fwrite(&name_length, 1, sizeof(int), file);
+        fwrite(node->name, 1, strlen(node->name), file);
+        fwrite(&node->stat, 1, sizeof(struct stat), file);
+        
         node = node->next;
     }
 
-    fwrite(DIR_DELIMITER, sizeof(char), 1, file);
-    node = list->head;
-
-    while (node != NULL)
-    {
-        fwrite(node->data, node->stat.st_size, 1, file);
-        node = node->next;
-    }
-
+    int delimiter = -1;
+    
+    fwrite(&delimiter, 1, sizeof(int), file);
     fclose(file);
 
     return SUCCESS;
