@@ -26,6 +26,13 @@ int move_member(char *source, char *target, linked_list_t *list);
 int extract_member(char *name, linked_list_t *list);
 
 /**
+ * @brief Extract all members from the linked list.
+ * @param list A pointer to the linked list.
+ * @return SUCCESS if the members were extracted successfully, FAILURE otherwise.
+ */
+int extract_all(linked_list_t *list);
+
+/**
  * @brief Remove a member from the linked list.
  * @param name The name of the member to be removed.
  * @param list A pointer to the linked list.

@@ -52,6 +52,28 @@ int extract_member(char *name, linked_list_t *list)
     return SUCCESS;
 }
 
+int extract_all(linked_list_t *list)
+{
+    if (is_list_empty(list))
+    {
+        printf("ERROR: archiver is already empty\n");
+        return FAILURE;
+    }
+
+    node_t *node = list->head;
+
+    while (node != NULL)
+    {
+        extract_node(list, node);
+        remove_node(list, node);
+        node = node->next;
+    }
+
+    printf("INFO: extracted all members successfully\n");
+
+    return SUCCESS;
+}
+
 int remove_member(char *name, linked_list_t *list)
 {
     if (is_list_empty(list))
