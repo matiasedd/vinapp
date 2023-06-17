@@ -16,7 +16,7 @@ node_t *create_node(char *name)
     }
 
     node->next = NULL;
-    node->name = replace(name, ' ', SPACE_REPLACEMENT);
+    node->name = name;
     stat(name, &node->stat);
 
     FILE *file = fopen(name, "rb");
@@ -175,6 +175,22 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
         list->head = source;
 
     return source;
+}
+
+node_t *extract_node(linked_list_t *list, node_t *node)
+{
+    FILE *file = fopen(node->name, "wb");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "ERROR: Could not open file %s\n", node->name);
+        exit(FAILURE);
+    }
+
+    fwrite(node->data, node->stat.st_size, 1, file);
+    fclose(file);
+
+    return NULL;
 }
 
 void print_linked_list(linked_list_t *list)

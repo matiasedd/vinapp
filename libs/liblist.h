@@ -92,6 +92,14 @@ node_t *remove_node(linked_list_t *list, node_t *node);
 node_t *move_node(linked_list_t *list, node_t *source, node_t *target);
 
 /**
+ * @brief Extract a node from the linked list.
+ * @param list A pointer to the linked list to extract from.
+ * @param node A pointer to the node to be extracted.
+ * @return A pointer to the extracted node.
+ */
+node_t *extract_node(linked_list_t *list, node_t *node);
+
+/**
  * @brief Print the contents of the linked list.
  * @param list A pointer to the linked list to be printed.
  */
