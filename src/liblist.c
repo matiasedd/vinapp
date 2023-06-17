@@ -179,6 +179,11 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target)
 
 node_t *extract_node(linked_list_t *list, node_t *node)
 {
+    struct stat st;
+
+    if (stat(node->name, &st) == -1)
+        mkdir(dirname(strdup(node->name)), 0700);
+
     FILE *file = fopen(node->name, "wb");
 
     if (file == NULL)

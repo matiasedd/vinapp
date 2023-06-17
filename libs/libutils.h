@@ -7,6 +7,7 @@
 #include <getopt.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <libgen.h>
 
 #define SUCCESS 0
 #define FAILURE 1
