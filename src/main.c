@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     linked_list_t *list = create_linked_list();
 
     load_backup(archiver, list);
-    read_file("assets/banner.txt");
+    read_file("assets/banner.txt", 0);
 
     while ((opt = getopt(argc, argv, "imxrch")) != -1)
     {
@@ -59,10 +59,10 @@ int main(int argc, char *argv[])
             print_linked_list(list);
             break;
         case 'h':
-            read_file("assets/help.txt");
+            read_file("assets/help.txt", 1);
             break;
         default:
-            read_file("assets/help.txt");
+            read_file("assets/help.txt", 1);
             break;
         }
     }

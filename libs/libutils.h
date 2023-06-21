@@ -17,8 +17,9 @@
 /**
  * @brief Read the contents of a file and print them to the standard output.
  * @param name The name of the file to be read.
+ * @param required Whether or not the file is required to exist.
  */
-void read_file(char *name);
+void read_file(char *name, int required);
 
 /**
  * @brief Replace all occurrences of a character in a string with a replacement character.

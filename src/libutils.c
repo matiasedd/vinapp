@@ -1,21 +1,25 @@
 #include "libutils.h"
 
-void read_file(char *name)
+void read_file(char *name, int required)
 {
     FILE *file = fopen(name, "r");
 
     if (file == NULL)
     {
-        fprintf(stderr, "ERROR: %s not found\n", name);
-        exit(FAILURE);
+        if (required)
+        {
+            fprintf(stderr, "ERROR: Could not open file %s\n", name);
+            exit(FAILURE);
+        }
+        return;
     }
 
-    char c;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-    printf("\n");
-    while ((c = fgetc(file)) != EOF)
-        printf("%c", c);
-    printf("\n");
+    while ((read = getline(&line, &len, file)) != -1)
+        printf("%s", line);
 
     fclose(file);
 }
