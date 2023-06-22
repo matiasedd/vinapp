@@ -198,6 +198,46 @@ node_t *extract_node(linked_list_t *list, node_t *node)
     return NULL;
 }
 
+node_t *replace_node(linked_list_t *list, node_t *old_node, node_t *new_node)
+{
+    if (old_node == list->head)
+    {
+        list->head = new_node;
+
+        if (list->head == NULL)
+            list->tail = NULL;
+    }
+    else
+    {
+        node_t *prev = list->head;
+
+        while (prev->next != old_node)
+            prev = prev->next;
+
+        prev->next = new_node;
+
+        if (prev->next == NULL)
+            list->tail = prev;
+    }
+
+    if (old_node == list->tail)
+        list->tail = new_node;
+
+    new_node->next = old_node->next;
+
+    return destroy_node(old_node);
+}
+
+int is_recent(node_t *node, linked_list_t *list)
+{
+    node_t *current = find_node_by_name(list, node->name);
+
+    if (current == NULL)
+        return 1;
+
+    return node->stat.st_mtime > current->stat.st_mtime;
+}
+
 void print_linked_list(linked_list_t *list)
 {
     if (is_list_empty(list))

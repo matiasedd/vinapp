@@ -9,6 +9,14 @@
 int insert_member(char *name, linked_list_t *list);
 
 /**
+ * @brief Inserts a member into the linked list if it is more recent than the current member.
+ * @param name The name of the member to be inserted.
+ * @param list A pointer to the linked list.
+ * @return 0 if the member was inserted successfully, -1 otherwise.
+ */
+int insert_recent(char *name, linked_list_t *list);
+
+/**
  * @brief Move a member from one position to another in the linked list.
  * @param source The name of the member to be moved.
  * @param target The name of the member after which the source member should be placed.

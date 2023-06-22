@@ -8,11 +8,56 @@ int insert_member(char *name, linked_list_t *list)
         return FAILURE;
     }
 
-    node_t *node = create_node(name);
-    insert_node(list, node);
-    printf("INFO: inserted successfully\n");
+    node_t *new_node = create_node(name);
+    node_t *existing_node = find_node_by_name(list, name);
+
+    if (existing_node == NULL)
+    {
+        insert_node(list, new_node);
+        printf("INFO: inserted successfully\n");
+    }
+    else
+    {
+        replace_node(list, existing_node, new_node);
+        printf("INFO: replaced successfully\n");
+    }
 
     return SUCCESS;
+}
+
+int insert_recent(char *name, linked_list_t *list)
+{
+    if (access(name, F_OK) == -1)
+    {
+        printf("ERROR: %s does not exist\n", name);
+        return FAILURE;
+    }
+
+    node_t *new_node = create_node(name);
+    node_t *existing_node = find_node_by_name(list, name);
+
+    if (is_recent(new_node, list))
+    {
+        if (existing_node == NULL)
+        {
+            insert_node(list, new_node);
+            printf("INFO: inserted successfully\n");
+
+            return SUCCESS;
+        }
+        else
+        {
+            replace_node(list, existing_node, new_node);
+            printf("INFO: replaced successfully\n");
+
+            return SUCCESS;
+        }
+    }
+
+    printf("INFO: Member is not more recent, skipping insertion\n");
+    destroy_node(new_node);
+
+    return FAILURE;
 }
 
 int move_member(char *source, char *target, linked_list_t *list)
@@ -64,6 +109,7 @@ int extract_all(linked_list_t *list)
 
     while (node != NULL)
     {
+        printf("INFO: extracting %s\n", node->name);
         extract_node(list, node);
         remove_node(list, node);
         node = node->next;
@@ -177,7 +223,7 @@ int refresh_backup(char *name, linked_list_t *list)
         fwrite(node->data, 1, node->stat.st_size, file);
         node = node->next;
     }
-    
+
     fclose(file);
 
     return SUCCESS;

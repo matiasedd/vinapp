@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     load_backup(archiver, list);
     read_file("assets/banner.txt", 0);
 
-    while ((opt = getopt(argc, argv, "imxrch")) != -1)
+    while ((opt = getopt(argc, argv, "iamxrch")) != -1)
     {
         switch (opt)
         {
@@ -18,6 +18,15 @@ int main(int argc, char *argv[])
             {
                 printf("[%d/%d] %-32s", i - 2, argc - 3, argv[i]);
                 insert_member(argv[i], list);
+            }
+            refresh_backup(archiver, list);
+            printf("\n");
+            break;
+        case 'a':
+            for (int i = 3; i < argc; i++)
+            {
+                printf("[%d/%d] %-32s", i - 2, argc - 3, argv[i]);
+                insert_recent(argv[i], list);
             }
             refresh_backup(archiver, list);
             printf("\n");

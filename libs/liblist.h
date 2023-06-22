@@ -4,7 +4,8 @@
  * @struct node
  * Represents a node in a linked list.
  */
-struct node {
+struct node
+{
     char *name;
     void *data;
     struct stat stat;
@@ -15,7 +16,8 @@ struct node {
  * @struct linked_list
  * Represents a linked list.
  */
-struct linked_list {
+struct linked_list
+{
     int size;
     struct node *head;
     struct node *tail;
@@ -98,6 +100,23 @@ node_t *move_node(linked_list_t *list, node_t *source, node_t *target);
  * @return A pointer to the extracted node.
  */
 node_t *extract_node(linked_list_t *list, node_t *node);
+
+/**
+ * @brief Replace a existing node with a new node.
+ * @param list A pointer to the linked list.
+ * @param old_node A pointer to the node to be replaced.
+ * @param new_node A pointer to the node to replace with.
+ * @return A pointer to the new node.
+ */
+node_t *replace_node(linked_list_t *list, node_t *old_node, node_t *new_node);
+
+/**
+ * @brief Check if a node is more recent than the current node in the linked list.
+ * @param node A pointer to the node to be checked.
+ * @param list A pointer to the linked list.
+ * @return 1 if the node is more recent, 0 otherwise.
+ */
+int is_recent(node_t *node, linked_list_t *list);
 
 /**
  * @brief Print the contents of the linked list.
